@@ -1,0 +1,58 @@
+local hide = {
+CHudHealth = true,
+CHudBattery = true,
+CHudAmmo = true
+}
+
+hook.Add("HUDShouldDraw","hudhide",function (name)
+
+if hide[name] then
+return false
+end
+
+end)
+
+
+function func()
+
+local lp = LocalPlayer()
+local wep = lp:GetActiveWeapon()
+c1 = 255 
+c2 = 255
+c3 = 0
+c4 = 255
+
+c5 = 255
+c6 = 255
+c7 = 0
+c8 = 255
+
+if lp:Health() < 50 then
+c1 = 0
+c2 = 255
+c3 = 0
+c4 = 255
+
+end
+
+if lp:Armor() < 50 then
+c5 = 0
+c6 = 255
+c7 = 0
+c8 = 255
+
+end
+
+draw.RoundedBox(20, 20, ScrH()-73, 220, 60, Color(0, 0, 0, 120))
+draw.RoundedBox(20, 20, ScrH()-153, 220, 60, Color(0, 0, 0, 120))
+draw.RoundedBox(20, ScrW()-266, ScrH()-73, 240, 60, Color(42, 255, 0, 42))
+draw.DrawText(wep:Clip1() or 0, "Arial24", 1200, 715, Color(0, 0, 0, 255))
+draw.DrawText("Ammo :", "Arial24", 1120, 715, Color(0, 0, 0, 255))
+draw.DrawText("HP : ", "Arial24", 40, 635, Color(255, 0, 0, 255))
+draw.DrawText("Armor :", "Arial24", 40, 715, Color(0, 0, 255, 255))
+draw.DrawText(lp:Health(), "Arial24", 100, 635, Color(c1,c2,c3,c4))
+draw.DrawText(lp:Armor(), "Arial24", 120, 715, Color(c5,c6,c7,c8))
+
+end
+
+hook.Add("HUDPaint", "HUD",func)
